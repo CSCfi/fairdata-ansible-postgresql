@@ -1,0 +1,21 @@
+---
+- name: Ensure postgresql yum repository is added
+  yum:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    state: present
+  become: yes
+  tags: postgresql-repository
+
+- name: Ensure postgresql rpm package is installed
+  yum:
+    name: postgresql96-server
+    state: present
+  become: yes
+  tags: postgresql-repository
+
+- name: Ensure psycopg2 is installed
+  yum:
+    name: python-psycopg2
+    state: present
+  become: yes
+  tags: postgresql-repository

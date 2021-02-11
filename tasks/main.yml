@@ -1,0 +1,12 @@
+---
+- name: Include postrgresql repository tasks
+  include_tasks: "postgresql-repository.yml"
+  tags: postgresql-repository
+
+- name: Include postrgresql service tasks
+  include_tasks: "postgresql-service.yml"
+  tags: postgresql-service
+
+- name: Include postrgresql users tasks
+  include_tasks: "postgresql-users.yml"
+  tags: postgresql-users

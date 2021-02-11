@@ -1,0 +1,40 @@
+---
+# PostgreSQL configuration
+# ~~~~~~~~~~~~~~~~~~~~~~~~
+# Configuration parameters passed to postgresql.conf
+
+data_directory: '/var/lib/pgsql/9.6/data'
+listen_addresses: 'localhost'
+shared_buffers: '128MB'
+wal_level: 'replica'
+archive_mode: 'off'
+max_wal_senders: 1
+effective_cache_size: '4GB'
+timezone: 'Europe/Helsinki'
+client_encoding: 'UTF-8'
+
+# Users and databases
+# ~~~~~~~~~~~~~~~~~~~
+# Initialize databases and users
+#
+# users:
+# - name: 'service1'
+#   password: 'password'
+#
+# databases:
+# - name: 'service1'
+#   owner: 'service1'
+
+users: []
+databases: []
+
+# Allowed connections
+# ~~~~~~~~~~~~~~~~~~~
+# Allow connections from remote hosts.
+#
+# allowed_connections:
+# - database: 'service1'
+#   user: 'service1'
+#   address: '172.29.236.0/22'
+
+allowed_connections: []

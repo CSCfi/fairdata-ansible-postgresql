@@ -1,0 +1,20 @@
+---
+- name: Ensure users exist
+  postgresql_user:
+    name: '{{ item.name }}'
+    password: '{{ item.password }}'
+    role_attr_flags: CREATEDB
+  with_items: '{{ users }}'
+  become: yes
+  become_user: postgres
+  no_log: True
+  tags: postgresql-users
+
+- name: Ensure databases exist
+  postgresql_db:
+    name: '{{ item.name }}'
+    owner: '{{ item.owner }}'
+  with_items: '{{ databases }}'
+  become: yes
+  become_user: postgres
+  tags: postgresql-users
