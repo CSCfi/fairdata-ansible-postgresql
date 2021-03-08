@@ -37,20 +37,44 @@
   become_user: postgres
   tags: postgresql-service
 
-- name: Install PostgreSQL configuration files
+- name: Install PostgreSQL configuration file
   template:
-    src: '{{ item }}.j2'
-    dest: '{{ data_directory }}/{{ item }}'
+    src: 'postgresql.conf.j2'
+    dest: '{{ data_directory }}/postgresql.conf'
     owner: postgres
     group: postgres
     mode: 0600
-  with_items:
-  - postgresql.conf
-  - pg_hba.conf
   become: yes
   become_user: postgres
   notify:
   - Restart PostgreSQL
+  tags: postgresql-service
+
+- name: Ensure that postgres pg_hba entry exists correctly
+  postgresql_pg_hba:
+    dest: '{{ data_directory }}/pg_hba.conf'
+    contype: 'local'
+    users: 'postgres'
+    source: '127.0.0.1/32'
+    databases: 'all'
+    method: 'ident'
+    create: true
+  become: yes
+  become_user: postgres
+  tags: postgresql-service
+
+- name: Ensure that needed pg_hba entries exist
+  postgresql_pg_hba:
+    dest: '{{ data_directory }}/pg_hba.conf'
+    contype: '{{ item.type }}'
+    users: '{{ item.user }}'
+    source: '{{ item.address }}'
+    databases: '{{ item.database }}'
+    method: '{{ item.method }}'
+    create: true
+  with_items: '{{ allowed_connections }}'
+  become: yes
+  become_user: postgres
   tags: postgresql-service
 
 - name: Ensure PostgreSQL server is started
