@@ -36,5 +36,6 @@ databases: []
 # - database: 'service1'
 #   user: 'service1'
 #   address: '172.29.236.0/22'
+#   method: 'md5'
 
 allowed_connections: []
